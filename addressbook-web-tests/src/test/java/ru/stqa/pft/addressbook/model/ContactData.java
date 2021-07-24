@@ -1,8 +1,9 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-  private final String firstName;
+  private final String id;
   private final String lastName;
+  private final String firstName;
   private final String address;
   private final String homeTelephone;
   private final String email;
@@ -15,44 +16,51 @@ public class ContactData {
 
     ContactData that = (ContactData) o;
 
-    if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+    if (id != null ? !id.equals(that.id) : that.id != null) return false;
     if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-    if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    if (homeTelephone != null ? !homeTelephone.equals(that.homeTelephone) : that.homeTelephone != null) return false;
-    if (email != null ? !email.equals(that.email) : that.email != null) return false;
-    return group != null ? group.equals(that.group) : that.group == null;
+    return firstName != null ? firstName.equals(that.firstName) : that.firstName == null;
   }
 
   @Override
   public int hashCode() {
-    int result = firstName != null ? firstName.hashCode() : 0;
+    int result = id != null ? id.hashCode() : 0;
     result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    result = 31 * result + (address != null ? address.hashCode() : 0);
-    result = 31 * result + (homeTelephone != null ? homeTelephone.hashCode() : 0);
-    result = 31 * result + (email != null ? email.hashCode() : 0);
-    result = 31 * result + (group != null ? group.hashCode() : 0);
+    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
     return result;
   }
 
   @Override
   public String toString() {
     return "ContactData{" +
-            "firstName='" + firstName + '\'' +
+            "id='" + id + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", address='" + address + '\'' +
-            ", homeTelephone='" + homeTelephone + '\'' +
-            ", email='" + email + '\'' +
-            ", group='" + group + '\'' +
+            ", firstName='" + firstName + '\'' +
             '}';
   }
 
-  public ContactData(String firstName, String lastName, String address, String homeTelephone, String email, String group) {
-    this.firstName = firstName;
+
+  public ContactData(String id, String lastName, String firstName, String address, String homeTelephone, String email, String group) {
+    this.id = id;
     this.lastName = lastName;
+    this.firstName = firstName;
     this.address = address;
     this.homeTelephone = homeTelephone;
     this.email = email;
     this.group = group;
+  }
+
+  public ContactData(String lastName, String firstName, String address, String homeTelephone, String email, String group) {
+    this.id = null;
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.address = address;
+    this.homeTelephone = homeTelephone;
+    this.email = email;
+    this.group = group;
+  }
+
+  public String getId() {
+    return id;
   }
 
   public String getFirstName() {

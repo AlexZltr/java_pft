@@ -10,7 +10,7 @@ public class ContactCreationTest extends TestBase{
   public void testContactCreation() throws Exception {
     int before = app.getContactHelper().getContactCount();
     app.getNavigationHelper().gotoAddContactPage();
-    app.getContactHelper().createContact(new ContactData("Василий", "Петров", "СПб, ул.Петрова, д.2", "222-33-44", "mail1@mail.ru", "test1"));
+    app.getContactHelper().createContact(new ContactData("Петров", "Василий", "СПб, ул.Петрова, д.2", "222-33-44", "mail1@mail.ru", "test1"));
     int after = app.getContactHelper().getContactCount();
     Assert.assertEquals(after, before + 1);
     app.getSessionHelper().logout();
