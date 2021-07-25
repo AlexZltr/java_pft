@@ -1,13 +1,13 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-  private int id;
-  private final String lastName;
-  private final String firstName;
-  private final String address;
-  private final String homeTelephone;
-  private final String email;
-  private final String group;
+  private int id = Integer.MAX_VALUE;
+  private String lastName;
+  private String firstName;
+  private String address;
+  private String homeTelephone;
+  private String email;
+  private String group;
 
   @Override
   public String toString() {
@@ -16,17 +16,6 @@ public class ContactData {
             ", lastName='" + lastName + '\'' +
             ", firstName='" + firstName + '\'' +
             '}';
-  }
-
-
-  public ContactData(int id, String lastName, String firstName, String address, String homeTelephone, String email, String group) {
-    this.id = id;
-    this.lastName = lastName;
-    this.firstName = firstName;
-    this.address = address;
-    this.homeTelephone = homeTelephone;
-    this.email = email;
-    this.group = group;
   }
 
   @Override
@@ -47,18 +36,40 @@ public class ContactData {
     return result;
   }
 
-  public ContactData(String lastName, String firstName, String address, String homeTelephone, String email, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.lastName = lastName;
-    this.firstName = firstName;
-    this.address = address;
-    this.homeTelephone = homeTelephone;
-    this.email = email;
-    this.group = group;
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public ContactData withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public ContactData withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withHomeTelephone(String homeTelephone) {
+    this.homeTelephone = homeTelephone;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
   }
 
   public int getId() {
@@ -86,4 +97,6 @@ public class ContactData {
   }
 
   public String getGroup() { return group; }
+
+
 }
