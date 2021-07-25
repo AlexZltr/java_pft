@@ -13,6 +13,27 @@ public class ContactData {
   private String email3;
   private String group;
 
+  private String allPhones;
+  private String allEmails;
+
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public String getAllEmails() {
+    return allEmails;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
@@ -127,6 +148,5 @@ public class ContactData {
   public String getEmail3() { return email3; }
 
   public String getGroup() { return group; }
-
 
 }
