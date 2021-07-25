@@ -29,8 +29,26 @@ public class ContactData {
     this.group = group;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactData that = (ContactData) o;
+
+    if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+    return firstName != null ? firstName.equals(that.firstName) : that.firstName == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = lastName != null ? lastName.hashCode() : 0;
+    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+    return result;
+  }
+
   public ContactData(String lastName, String firstName, String address, String homeTelephone, String email, String group) {
-    this.id = 0;
+    this.id = Integer.MAX_VALUE;
     this.lastName = lastName;
     this.firstName = firstName;
     this.address = address;
@@ -41,26 +59,6 @@ public class ContactData {
 
   public void setId(int id) {
     this.id = id;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactData that = (ContactData) o;
-
-    if (id != that.id) return false;
-    if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-    return firstName != null ? firstName.equals(that.firstName) : that.firstName == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id;
-    result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-    result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-    return result;
   }
 
   public int getId() {
