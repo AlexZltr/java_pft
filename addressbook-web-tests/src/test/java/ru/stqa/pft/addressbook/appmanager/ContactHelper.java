@@ -30,6 +30,13 @@ public class ContactHelper extends HelperBase {
     }
   }
 
+  public void modifyContact(int index, ContactData contact) {
+    selectContact(index);
+    initContactModification(index);
+    fillNewContact(contact, false);
+    submitContactModification();
+  }
+
   public void submitAddContact() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }
