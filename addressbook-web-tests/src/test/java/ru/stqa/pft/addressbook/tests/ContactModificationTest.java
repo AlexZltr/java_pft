@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -17,7 +16,7 @@ public class ContactModificationTest extends TestBase{
     app.goTo().gotoHome();
     if (app.contact().list().size() ==0) {
       app.goTo().addContactPage();
-      app.contact().create(new ContactData().withLastName("Петров").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomeTelephone("222-33-44").withEmail("mail1@mail.ru").withGroup("test1"));
+      app.contact().create(new ContactData().withLastName("Петров").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withEmail("mail1@mail.ru").withGroup("test1"));
     }
   }
 
@@ -25,7 +24,7 @@ public class ContactModificationTest extends TestBase{
   public void testContactModification() {
     Contacts before = app.contact().all();
     ContactData modifiedContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastName("Петров2").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomeTelephone("222-33-44").withEmail("mail1@mail.ru");
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastName("Петров2").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withEmail("mail1@mail.ru");
     app.contact().modify(contact);
     app.goTo().gotoHome();
     assertThat(app.contact().count(), equalTo(before.size()));
