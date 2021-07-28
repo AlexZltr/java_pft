@@ -2,31 +2,31 @@
   {
     "lastName": "TestLastName0",
     "firstName": "TestName0",
-    "homePhone": "0000",
+    "homePhone": "00",
     "mobilePhone": "1110"
   },
   {
     "lastName": "TestLastName1",
     "firstName": "TestName1",
-    "homePhone": "0001",
+    "homePhone": "01",
     "mobilePhone": "1111"
   },
   {
     "lastName": "TestLastName2",
     "firstName": "TestName2",
-    "homePhone": "0002",
+    "homePhone": "02",
     "mobilePhone": "1112"
   },
   {
     "lastName": "TestLastName3",
     "firstName": "TestName3",
-    "homePhone": "0003",
+    "homePhone": "03",
     "mobilePhone": "1113"
   },
   {
     "lastName": "TestLastName4",
     "firstName": "TestName4",
-    "homePhone": "0004",
+    "homePhone": "04",
     "mobilePhone": "1114"
   }
 ]
