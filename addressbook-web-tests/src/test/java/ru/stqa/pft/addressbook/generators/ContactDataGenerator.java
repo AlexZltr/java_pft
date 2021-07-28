@@ -55,10 +55,10 @@ public class ContactDataGenerator {
   private List<ContactData> generateContacts(int count) {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
-      contacts.add(new ContactData().withFirstName(String.format("TestName %s", i))
-              .withLastName(String.format("TestLastName %s", i))
-              .withHomePhone(String.format("000 %s", i))
-              .withMobilePhone(String.format("111 %s", i)));
+      contacts.add(new ContactData().withLastName(String.format("TestLastName%s", i))
+              .withFirstName(String.format("TestName%s", i))
+              .withHomePhone(String.format("000%s", i))
+              .withMobilePhone(String.format("111%s", i)));
     }
     return contacts;
   }

@@ -22,17 +22,17 @@ public class ContactData {
   private String group;
   private String allPhones;
   private String allEmails;
+//  private File photo;
 
-  public File getPhoto() {
-    return photo;
-  }
+//
+//  public File getPhoto() {
+//    return photo;
+//  }
+//  public ContactData withPhoto(File photo) {
+//    this.photo = photo;
+//    return this;
+//  }
 
-  public ContactData withPhoto(File photo) {
-    this.photo = photo;
-    return this;
-  }
-
-  private File photo;
 
   public String getAllPhones() {
     return allPhones;
