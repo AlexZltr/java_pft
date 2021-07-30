@@ -2,13 +2,10 @@ package ru.stqa.pft.addressbook.tests;
 
 import com.google.gson.Gson;
 import org.openqa.selenium.json.TypeToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,8 +19,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase{
-
-  Logger logger = LoggerFactory.getLogger(ContactCreationTest.class);
 
   @DataProvider
   public Iterator<Object[]> validContactsFromJson() throws IOException {
@@ -43,7 +38,6 @@ public class ContactCreationTest extends TestBase{
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact){
-    logger.info("Start test testContactCreation");
     app.goTo().gotoHome();
     Contacts before = app.contact().all();
     app.goTo().addContactPage();
@@ -51,7 +45,6 @@ public class ContactCreationTest extends TestBase{
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
     assertThat(after,equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-    logger.info("Stop test testContactCreation");
   }
 
   @Test(enabled = false)
