@@ -2,8 +2,11 @@ package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.File;
-
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
   private int id = Integer.MAX_VALUE;
   @Expose
