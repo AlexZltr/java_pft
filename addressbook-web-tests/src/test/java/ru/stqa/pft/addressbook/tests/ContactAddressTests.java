@@ -11,7 +11,7 @@ public class ContactAddressTests extends TestBase{
   @Test
   public void ContactAddressTests() {
     app.goTo().gotoHome();
-    ContactData contact = app.contact().all().iterator().next();
+    ContactData contact = app.db().contacts().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
   }

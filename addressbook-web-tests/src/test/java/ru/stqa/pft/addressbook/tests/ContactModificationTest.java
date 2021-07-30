@@ -13,22 +13,22 @@ public class ContactModificationTest extends TestBase{
 
   @BeforeMethod
   private void ensurePreconditions() {
-    app.goTo().gotoHome();
-    if (app.contact().list().size() ==0) {
+    if (app.db().contacts().size() == 0) {
+      app.goTo().gotoHome();
       app.goTo().addContactPage();
-      app.contact().create(new ContactData().withLastName("Петров").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withEmail("mail1@mail.ru").withGroup("test1"));
+      app.contact().create(new ContactData().withLastName("Петров").withFirstName("Василий").withNickname("Вася").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withMobilePhone("111").withWorkPhone("222").withEmail("mail1@mail.ru").withGroup("test1"));
     }
   }
 
   @Test (enabled = true)
   public void testContactModification() {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastName("Петров2").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withEmail("mail1@mail.ru");
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastName("Петров2").withFirstName("Василий").withNickname("Вася").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withMobilePhone("1221").withWorkPhone("2112").withEmail("mail1@mail.ru");
     app.contact().modify(contact);
     app.goTo().gotoHome();
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 

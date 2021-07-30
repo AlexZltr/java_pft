@@ -2,31 +2,28 @@
   {
     "lastName": "TestLastName0",
     "firstName": "TestName0",
+    "nickname": "nickname0",
     "homePhone": "00",
-    "mobilePhone": "1110"
+    "mobilePhone": "1110",
+    "workPhone": "3450",
+    "email": "test0@mail.ru"
   },
   {
     "lastName": "TestLastName1",
     "firstName": "TestName1",
+    "nickname": "nickname1",
     "homePhone": "01",
-    "mobilePhone": "1111"
+    "mobilePhone": "1111",
+    "workPhone": "3451",
+    "email": "test1@mail.ru"
   },
   {
     "lastName": "TestLastName2",
     "firstName": "TestName2",
+    "nickname": "nickname2",
     "homePhone": "02",
-    "mobilePhone": "1112"
-  },
-  {
-    "lastName": "TestLastName3",
-    "firstName": "TestName3",
-    "homePhone": "03",
-    "mobilePhone": "1113"
-  },
-  {
-    "lastName": "TestLastName4",
-    "firstName": "TestName4",
-    "homePhone": "04",
-    "mobilePhone": "1114"
+    "mobilePhone": "1112",
+    "workPhone": "3452",
+    "email": "test2@mail.ru"
   }
 ]

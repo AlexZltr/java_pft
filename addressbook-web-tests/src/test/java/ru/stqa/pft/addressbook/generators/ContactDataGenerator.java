@@ -23,6 +23,7 @@ public class ContactDataGenerator {
   @Parameter(names = "-d", description = "Data format")
   public String format;
 
+  //-c 3 -d json -f src/test/resources/contacts.json
   public static void main(String[] args) throws IOException {
     ContactDataGenerator generator = new ContactDataGenerator();
     JCommander jCommander = new JCommander(generator);
@@ -58,7 +59,10 @@ public class ContactDataGenerator {
       contacts.add(new ContactData().withLastName(String.format("TestLastName%s", i))
               .withFirstName(String.format("TestName%s", i))
               .withHomePhone(String.format("0%s", i))
-              .withMobilePhone(String.format("111%s", i)));
+              .withMobilePhone(String.format("111%s", i))
+              .withWorkPhone(String.format("345%s", i))
+              .withEmail(String.format("test%s@mail.ru", i))
+              .withNickname(String.format("nickname%s", i)));
     }
     return contacts;
   }

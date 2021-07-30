@@ -23,6 +23,7 @@ public class GroupDataGenerator {
   @Parameter(names = "-d", description = "Data format")
   public String format;
 
+  //prugramm arguments -c 3 -d json -f src/test/resources/groups.json
   public static void main(String[] args) throws IOException {
     GroupDataGenerator generator = new GroupDataGenerator();
     JCommander jCommander = new JCommander(generator);
