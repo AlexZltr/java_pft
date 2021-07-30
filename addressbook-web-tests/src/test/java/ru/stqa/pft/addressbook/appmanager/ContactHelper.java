@@ -79,7 +79,7 @@ public class ContactHelper extends HelperBase {
 
   public void initContactModificationById(int id) {
 //    wd.findElement(By.xpath("//input[@id='" + id + "']/../following-sibling::td[7]")).click();
-    wd.findElement(By.xpath(String.format("//input[@id='%s']/../following-sibling::td[7]", id))).click();
+    wd.findElement(By.xpath(String.format(".//input[@id='" + id + "']/../following-sibling::td[7]/a/img", id))).click();
   }
 
   public void submitContactModification() {

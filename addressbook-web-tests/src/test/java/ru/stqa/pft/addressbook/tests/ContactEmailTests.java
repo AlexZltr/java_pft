@@ -17,14 +17,14 @@ public class ContactEmailTests extends TestBase{
     if (app.db().contacts().size() == 0) {
       app.goTo().gotoHome();
       app.goTo().addContactPage();
-      app.contact().create(new ContactData().withLastName("Петров").withFirstName("Василий").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withGroup("test1"));
+      app.contact().create(new ContactData().withLastName("Петров").withFirstName("Василий").withNickname("Вася").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withGroup("test1"));
     }
   }
 
   @Test
   public void ContactEmailTests() {
-    app.goTo().gotoHome();
     ContactData contact = app.db().contacts().iterator().next();
+    app.goTo().gotoHome();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
     assertThat(contact.getEmail(), equalTo(contactInfoFromEditForm.getEmail()));

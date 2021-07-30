@@ -22,6 +22,7 @@ public class ContactModificationTest extends TestBase{
 
   @Test (enabled = true)
   public void testContactModification() {
+    app.goTo().gotoHome();
     Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData().withId(modifiedContact.getId()).withLastName("Петров2").withFirstName("Василий").withNickname("Вася").withAddress("СПб, ул.Петрова, д.2").withHomePhone("222-33-44").withMobilePhone("1221").withWorkPhone("2112").withEmail("mail1@mail.ru");
@@ -30,6 +31,6 @@ public class ContactModificationTest extends TestBase{
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+    verifyContactsListInUI();//vm options: -DverifyUI=true
   }
-
 }
