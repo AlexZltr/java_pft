@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void fillNewContact(ContactData contactData, boolean creation) {
+
     type(By.name("lastname"), contactData.getLastName());
     type(By.name("firstname"), contactData.getFirstName());
     type(By.name("address"), contactData.getAddress());
@@ -27,16 +29,19 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
-    type(By.name("nickname"),contactData.getNickname());
+    type(By.name("nickname"), contactData.getNickname());
 //    attach(By.name("photo"),contactData.getPhoto());
 
     if (creation) {
-      if (contactData.getGroup() != null)
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("new_group")));
+      if (contactData.getGroups().size() > 0) {
+        //  Assert.assertTrue(contactData.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      }
+      } else {
+        Assert.assertFalse(isElementPresent(By.name("new_group")));
+      }
     }
-  }
+
 
   public void modify(ContactData contact) {
     selectContactById(contact.getId());
