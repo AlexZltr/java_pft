@@ -21,25 +21,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase{
 
-  @DataProvider
-  public Iterator<Object[]> validContactsFromJson() throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.json"))) {
-      String json = "";
-      String line = reader.readLine();
-      while (line != null) {
-        json += line;
-        line = reader.readLine();
-      }
-      Gson gson = new Gson();
-      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
-      }.getType());
-      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
-    }
-  }
-
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact){
-    Groups groups = app.db().groups();
     app.goTo().gotoHome();
     Contacts before = app.db().contacts();
     app.goTo().addContactPage();

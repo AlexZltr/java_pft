@@ -74,7 +74,7 @@ public class ContactHelper extends HelperBase {
     wd.findElements(By.name("selected[]")).get(index).click();
   }
 
-  private void selectContactById(int id) {
+  public void selectContactById(int id) {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 
@@ -172,5 +172,11 @@ public class ContactHelper extends HelperBase {
             .withLastName(lastname).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work)
             .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
 
+  }
+
+  public void addToGroupByName(int id) {
+    click(By.xpath("//select[@name='to_group']"));
+    click(By.xpath("//select[@name='to_group']/option[@value='" + id + "']"));
+    click(By.xpath("//input[@value='Add to']"));
   }
 }
