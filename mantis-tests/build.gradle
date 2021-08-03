@@ -6,10 +6,16 @@ repositories {
 
 dependencies {
     implementation 'org.testng:testng:7.4.0'
+    implementation 'ch.qos.logback:logback-classic:1.1.5'
     implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-beta-4'
     implementation 'org.hamcrest:hamcrest:2.2'
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'commons-net:commons-net:3.4'
+    implementation 'org.subethamail:subethasmtp:3.1.7'
+    implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.8'
+    implementation 'org.hibernate:hibernate-core:5.1.0.Final'
+    implementation 'mysql:mysql-connector-java:8.0.26'
+
 }
 
 task testHttp (type: Test) {

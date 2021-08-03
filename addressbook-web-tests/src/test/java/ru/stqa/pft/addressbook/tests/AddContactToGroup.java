@@ -8,6 +8,12 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.security.acl.Group;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class AddContactToGroup extends TestBase {
 
   @BeforeMethod
@@ -24,6 +30,7 @@ public class AddContactToGroup extends TestBase {
       app.contact().create(new ContactData().withLastName("LastName")
               .withFirstName("FirstName"));
     }
+
   }
 
   @Test
@@ -39,6 +46,25 @@ public class AddContactToGroup extends TestBase {
     System.out.println("Список групп, в которых уже состоит контакт" + selectedContact.getLastName() + "'(id = "+idSelectedContact+ ") :" + groupsContactBefore);
     GroupData selectedGroup = dbGroups.iterator().next();
     int idSelectedGroup = selectedGroup.getId();
+
+    for (ContactData c : dbContacts) {
+         Groups groupsContact = c.getGroups();
+      for (GroupData g : groupsContact) {
+        if (selectedGroup.getId() != g.getId()) {
+          List<ContactData> listContactAddedToGroup = new ArrayList<>();
+          listContactAddedToGroup.add(c);
+        }
+      }
+    }
+
+//    for (GroupData g : groupsContactBefore) {
+//      Map<GroupData, ContactData> mapContactForGroup = new HashMap<>();
+//      if (idSelectedGroup == g.getId()) {
+//        for (ContactData c : dbContacts) {
+//          c.getGroups();
+//        }
+//      }
+//    }
     System.out.println("Контакт '" + selectedContact.getLastName() + "'(id = "+idSelectedContact+ ") добавляем в группу '" + selectedGroup.getName() + "' (id = "+idSelectedGroup+ ")");
 
     app.contact().selectContactById(idSelectedContact);
