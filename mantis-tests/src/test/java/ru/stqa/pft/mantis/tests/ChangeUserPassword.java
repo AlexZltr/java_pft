@@ -29,11 +29,11 @@ public class ChangeUserPassword extends TestBase{
     app.registration().goToManageUser();
     Users dbUser = app.db().users();
 ////    Выбрать первого user из списка пользователей без Админа:
-//    Users dbUsersNotAdmin = dbUser.without(dbUser.stream().filter((u) -> u.getUsername().equals("administrator")).findFirst().get());
-//    UserData selectedUser = dbUsersNotAdmin.iterator().next();
+    Users dbUsersNotAdmin = dbUser.without(dbUser.stream().filter((u) -> u.getUsername().equals("administrator")).findFirst().get());
+    UserData selectedUser = dbUsersNotAdmin.iterator().next();
 ////    ИЛИ указать user:
-    String userForChange = "user1627978394979";
-    UserData selectedUser = dbUser.stream().filter((u) -> u.getUsername().equals(userForChange)).findFirst().get();
+//    String userForChange = "user1627978394979";
+//    UserData selectedUser = dbUser.stream().filter((u) -> u.getUsername().equals(userForChange)).findFirst().get();
     app.registration().changeUserById(selectedUser.getId());
     app.registration().resetPassword();
 
