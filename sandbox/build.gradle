@@ -10,6 +10,9 @@ dependencies {
     implementation 'org.testng:testng:7.4.0'
 }
 
+task sandbox(type: Test) {
 test {
-    useTestNG()
+    useTestNG{
+        suites 'src/test/resources/testng.xml'    }
+}
 }
