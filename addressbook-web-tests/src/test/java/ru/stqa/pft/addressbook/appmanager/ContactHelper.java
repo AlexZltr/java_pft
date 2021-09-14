@@ -76,7 +76,8 @@ public class ContactHelper extends HelperBase {
   }
 
   public void selectContactById(int id) {
-    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+//    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    wd.findElement(By.xpath(".//input[@id=" + id + "]")).click();
   }
 
   public void initContactModification(int index) {
@@ -175,7 +176,7 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  public void addToGroupByName(int id) {
+  public void addToGroupById(int id) {
     click(By.xpath("//select[@name='to_group']"));
     click(By.xpath("//select[@name='to_group']/option[@value='" + id + "']"));
     click(By.xpath("//input[@value='Add to']"));

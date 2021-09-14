@@ -8,6 +8,9 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DeleteContactFromGroup extends TestBase{
 
   @BeforeMethod
@@ -25,41 +28,50 @@ public class DeleteContactFromGroup extends TestBase{
       app.contact().create(new ContactData().withLastName("LastName")
               .withFirstName("FirstName"));
     }
-    //проверяем наличие групп у выбираемого контакта
-    Contacts dbExistContacts = app.db().contacts();
-    ContactData selectedContact = dbExistContacts.iterator().next();
-    Groups groupsContactBefore = selectedContact.getGroups();
-    Groups dbExistGroups = app.db().groups();
-    GroupData selectedGroup = dbExistGroups.iterator().next();
-    if(groupsContactBefore.size() == 0) {
-      app.goTo().gotoHome();
-      app.contact().selectContactById(selectedContact.getId());
-      app.contact().addToGroupByName(selectedGroup.getId());
-    }
   }
 
   @Test
   public void testRemoveContactFromGroup() {
     Contacts dbContacts = app.db().contacts();
     Groups dbGroups = app.db().groups();
+    ContactData selectedContact;
+    GroupData selectedGroup;
+    Groups groupsContactForRemove;
 
-    app.goTo().gotoHome();
-    ContactData selectedContact = dbContacts.iterator().next();
-    int idSelectedContact = selectedContact.getId();
-    Groups groupsContactBefore = selectedContact.getGroups();
-    System.out.println("Список групп, в которых уже состоит контакт" + selectedContact.getLastName() + "'(id = "+idSelectedContact+ ") :" + groupsContactBefore);
-    GroupData selectedGroup = dbGroups.iterator().next();
-    int idSelectedGroup = selectedGroup.getId();
-    System.out.println("Контакт '" + selectedContact.getLastName() + "'(id = "+idSelectedContact+ ") будет удален из группы '" + selectedGroup.getName() + "' (id = "+idSelectedGroup+ ")");
+    ///создаем список контактов, у которых кол-во добавленных групп больше 1
+    List<ContactData> listContactForRemove = new ArrayList<ContactData>() ;
+    for (ContactData contact : dbContacts) {
+      if (contact.getGroups().size() >=1){
+        listContactForRemove.add(contact);
+      }
+    }
+    ///если список пустой, выбираем любой контакт и добавляем в группу
+    if (listContactForRemove.size() == 0) {
+      selectedContact = dbContacts.iterator().next();
 
-    app.contact().removeFromGroup(selectedContact, selectedGroup);
+      selectedGroup = dbGroups.iterator().next();
+      app.goTo().gotoHome();
+      app.contact().selectContactById(selectedContact.getId());
+      app.contact().addToGroupById(selectedGroup.getId());
+      groupsContactForRemove = selectedContact.getGroups().withAdded(selectedGroup);
+      selectedGroup = groupsContactForRemove.iterator().next();
+    } //если не пустой, выбираем любой контакт из списка контактов, у которых кол-во добавленных групп больше 1
+    else{
+      selectedContact = listContactForRemove.iterator().next();
+      groupsContactForRemove = selectedContact.getGroups();
+      selectedGroup = selectedContact.getGroups().iterator().next();
+    }
 
-    Groups groupsContactAfter = groupsContactBefore.without(selectedGroup);
+      app.goTo().gotoHome();
+      app.contact().selectContactById(selectedContact.getId());
+      app.contact().removeFromGroup(selectedContact, selectedGroup);
+
+    Groups groupsContactAfter = groupsContactForRemove.without(selectedGroup);
     Contacts dbContactsAfter = app.db().contacts();
     for (ContactData c : dbContactsAfter) {
-      if (c.getId() == idSelectedContact) {
+      if (c.getId() == selectedContact.getId()) {
         Assert.assertEquals(c.getGroups(),groupsContactAfter);
-        System.out.println("Контакт '" + selectedContact.getLastName() + "' (id = "+idSelectedContact+ ") успешно удален из группы '" + selectedGroup.getName() + "' (id = "+idSelectedGroup+ ")");
+        System.out.println("Контакт '" + selectedContact.getLastName() + "' (id = "+selectedContact.getId()+ ") успешно удален из группы '" + selectedGroup.getName() + "' (id = "+selectedGroup.getId()+ ")");
       }
     }
   }

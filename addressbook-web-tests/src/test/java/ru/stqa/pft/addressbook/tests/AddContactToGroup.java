@@ -8,11 +8,12 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 public class AddContactToGroup extends TestBase {
 
@@ -30,52 +31,68 @@ public class AddContactToGroup extends TestBase {
       app.contact().create(new ContactData().withLastName("LastName")
               .withFirstName("FirstName"));
     }
-
   }
 
   @Test
   public void testAddContactToGroup() {
-    Contacts dbContacts = app.db().contacts();
-    Groups dbGroups = app.db().groups();
+    Contacts dbContactsBefore = app.db().contacts();
+    Groups dbGroupsBefore = app.db().groups();
 
     app.goTo().gotoHome();
 
-    ContactData selectedContact = dbContacts.iterator().next();
-    int idSelectedContact = selectedContact.getId();
-    Groups groupsContactBefore = selectedContact.getGroups();
-    System.out.println("Список групп, в которых уже состоит контакт" + selectedContact.getLastName() + "'(id = "+idSelectedContact+ ") :" + groupsContactBefore);
-    GroupData selectedGroup = dbGroups.iterator().next();
-    int idSelectedGroup = selectedGroup.getId();
+    int idSelectedGroup = 0;
+    int idSelectedContact = 0;
+    ContactData  selectedContact;
+    GroupData selectedGroup;
+    Groups groupContactBefore = new Groups();
 
-    for (ContactData c : dbContacts) {
-         Groups groupsContact = c.getGroups();
-      for (GroupData g : groupsContact) {
-        if (selectedGroup.getId() != g.getId()) {
-          List<ContactData> listContactAddedToGroup = new ArrayList<>();
-          listContactAddedToGroup.add(c);
-        }
+    ///создаем список контактов, у которых кол-во добавленных групп не равно общему кол-ву групп
+    List<ContactData> listContactForAdded = new ArrayList<ContactData>() ;
+    for (ContactData contact : dbContactsBefore) {
+      if (contact.getGroups().size() != dbGroupsBefore.size()){
+        listContactForAdded.add(contact);
       }
     }
 
-//    for (GroupData g : groupsContactBefore) {
-//      Map<GroupData, ContactData> mapContactForGroup = new HashMap<>();
-//      if (idSelectedGroup == g.getId()) {
-//        for (ContactData c : dbContacts) {
-//          c.getGroups();
-//        }
-//      }
-//    }
-    System.out.println("Контакт '" + selectedContact.getLastName() + "'(id = "+idSelectedContact+ ") добавляем в группу '" + selectedGroup.getName() + "' (id = "+idSelectedGroup+ ")");
+    ///если список пустой, создаем новый контакт
+    if (listContactForAdded.size() == 0) {
+    app.goTo().gotoHome();
+    app.goTo().addContactPage();
+      long now = System.currentTimeMillis();
+      String LastName = String.format("LastName%s", now);
+    selectedContact = new ContactData().withLastName(LastName).withFirstName("FirstName");
+    app.contact().create(selectedContact);
+      Contacts dbContactWithAdded = app.db().contacts();
+      idSelectedContact = dbContactWithAdded.stream().mapToInt((g) -> g.getId()).max().getAsInt();
+    }
+    ///если не пустой, берем любой контакт из этого списка
+    else {
+      selectedContact = listContactForAdded.iterator().next();
+      idSelectedContact = selectedContact.getId();
+    }
+    System.out.println("idSelectedContact " + idSelectedContact);
 
+    ///для выбранного контакта находим группы, в которые еще не добавлен контакт
+    Groups contactGroupsBefore = selectedContact.getGroups();
+    List<GroupData> listGroupForAdded = new ArrayList<GroupData>() ;
+    for (GroupData group : dbGroupsBefore){
+      if (!contactGroupsBefore.contains(group) ){
+        listGroupForAdded.add(group);
+      }
+    }
+    selectedGroup = listGroupForAdded.iterator().next();
+    idSelectedGroup = selectedGroup.getId();
+    System.out.println("idSelectedGroup " + idSelectedGroup);
+
+    app.goTo().gotoHome();
     app.contact().selectContactById(idSelectedContact);
-    app.contact().addToGroupByName(selectedGroup.getId());
+    app.contact().addToGroupById(idSelectedGroup);
 
-    Groups groupsContactAfter = groupsContactBefore.withAdded(selectedGroup);
+    Groups groupsContactAfter = contactGroupsBefore.withAdded(selectedGroup);
     Contacts dbContactsAfter = app.db().contacts();
     for (ContactData c : dbContactsAfter) {
       if (c.getId() == idSelectedContact) {
         Assert.assertEquals(c.getGroups(),groupsContactAfter);
-        System.out.println("Контакт '" + selectedContact.getLastName() + "' (id = "+idSelectedContact+ ") успешно добавлен в группу '" + selectedGroup.getName() + "' (id = "+idSelectedGroup+ ")");
       }
     }
   }
